@@ -1,0 +1,242 @@
+object FRel: TFRel
+  Left = 911
+  Height = 244
+  Top = 338
+  Width = 465
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
+  Caption = 'Relatórios'
+  ClientHeight = 244
+  ClientWidth = 465
+  OnShow = FormShow
+  Position = poDesktopCenter
+  LCLVersion = '1.4.4.0'
+  object TipoRel: TRadioGroup
+    Left = 8
+    Height = 136
+    Top = 0
+    Width = 449
+    AutoFill = True
+    ChildSizing.LeftRightSpacing = 6
+    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+    ChildSizing.EnlargeVertical = crsHomogenousChildResize
+    ChildSizing.ShrinkHorizontal = crsScaleChilds
+    ChildSizing.ShrinkVertical = crsScaleChilds
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 4
+    ClientHeight = 111
+    ClientWidth = 445
+    Columns = 4
+    ItemIndex = 0
+    Items.Strings = (
+      'Geral'
+      'Por Período'
+      'Por Emitente'
+      'Por Destinatário'
+      'Geral'
+      'Por Período'
+      'Por Emitente'
+      'Por Destinatário'
+    )
+    OnClick = TipoRelClick
+    TabOrder = 0
+  end
+  object Label1: TLabel
+    Left = 18
+    Height = 20
+    Top = 16
+    Width = 32
+    Caption = 'PDF:'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 18
+    Height = 20
+    Top = 72
+    Width = 46
+    Caption = 'HTML:'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object LblNome: TLabel
+    Left = 8
+    Height = 20
+    Top = 152
+    Width = 54
+    Caption = 'Período:'
+    ParentColor = False
+    Visible = False
+  end
+  object Periodo: TPanel
+    Left = 66
+    Height = 35
+    Top = 146
+    Width = 326
+    BevelOuter = bvNone
+    ClientHeight = 35
+    ClientWidth = 326
+    TabOrder = 1
+    Visible = False
+    object DataIni: TDateTimePicker
+      Left = 39
+      Height = 28
+      Top = 2
+      Width = 101
+      CenturyFrom = 1941
+      MaxDate = 2958465
+      MinDate = -53780
+      TabOrder = 0
+      TrailingSeparator = False
+      TextForNullDate = 'NULL'
+      LeadingZeros = True
+      Kind = dtkDate
+      TimeFormat = tf24
+      TimeDisplay = tdHMS
+      DateMode = dmComboBox
+      Date = 42387
+      Time = 0.217750960648118
+      UseDefaultSeparators = True
+      HideDateTimeParts = []
+      MonthNames = 'Long'
+    end
+    object LblNome1: TLabel
+      Left = 13
+      Height = 20
+      Top = 7
+      Width = 17
+      Caption = 'de'
+      ParentColor = False
+    end
+    object LblNome2: TLabel
+      Left = 147
+      Height = 20
+      Top = 7
+      Width = 8
+      Caption = 'a'
+      ParentColor = False
+    end
+    object DataFim: TDateTimePicker
+      Left = 163
+      Height = 28
+      Top = 2
+      Width = 101
+      CenturyFrom = 1941
+      MaxDate = 2958465
+      MinDate = -53780
+      TabOrder = 1
+      TrailingSeparator = False
+      TextForNullDate = 'NULL'
+      LeadingZeros = True
+      Kind = dtkDate
+      TimeFormat = tf24
+      TimeDisplay = tdHMS
+      DateMode = dmComboBox
+      Date = 42387
+      Time = 0.217750960648118
+      UseDefaultSeparators = True
+      HideDateTimeParts = []
+      MonthNames = 'Long'
+    end
+  end
+  object BtnGerar: TButton
+    Left = 8
+    Height = 25
+    Top = 212
+    Width = 75
+    Caption = '&Gerar'
+    OnClick = BtnGerarClick
+    TabOrder = 4
+  end
+  object BtnCancelar: TButton
+    Left = 382
+    Height = 25
+    Top = 212
+    Width = 75
+    Cancel = True
+    Caption = '&Voltar'
+    OnClick = BtnCancelarClick
+    TabOrder = 5
+  end
+  object ComboDest: TComboBox
+    Left = 8
+    Height = 28
+    Top = 176
+    Width = 449
+    ItemHeight = 20
+    Style = csDropDownList
+    TabOrder = 3
+    Visible = False
+  end
+  object ComboEmit: TComboBox
+    Left = 8
+    Height = 28
+    Top = 176
+    Width = 449
+    ItemHeight = 20
+    Style = csDropDownList
+    TabOrder = 2
+    Visible = False
+  end
+  object QEmit: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'emi_rzo'
+        DataType = ftString
+        Precision = -1
+        Size = 255
+      end>
+    Database = FMenu.Database
+    Transaction = FMenu.Transaction
+    SQL.Strings = (
+      'select emi_rzo from emitentes'
+      'order by emi_rzo'
+    )
+    Params = <>
+    left = 216
+    top = 192
+  end
+  object QDest: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'des_nom'
+        DataType = ftString
+        Precision = -1
+        Size = 255
+      end>
+    AutoCalcFields = False
+    Database = FMenu.Database
+    Transaction = FMenu.Transaction
+    SQL.Strings = (
+      'select des_nom from destinatarios'
+      'order by des_nom'
+    )
+    Params = <>
+    left = 272
+    top = 192
+  end
+  object DEmit: TDataSource
+    DataSet = QEmit
+    left = 104
+    top = 192
+  end
+  object DDest: TDataSource
+    DataSet = QDest
+    left = 160
+    top = 192
+  end
+  object Q: TSQLQuery
+    FieldDefs = <>
+    Database = FMenu.Database
+    Transaction = FMenu.Transaction
+    Params = <>
+    left = 328
+    top = 192
+  end
+  object Diretorio: TSelectDirectoryDialog
+    left = 88
+    top = 21
+  end
+end

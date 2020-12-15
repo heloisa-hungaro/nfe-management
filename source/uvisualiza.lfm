@@ -1,0 +1,265 @@
+object FVisualiza: TFVisualiza
+  Left = 514
+  Height = 594
+  Top = 289
+  Width = 1242
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
+  Caption = 'Visualização de Notas'
+  ClientHeight = 594
+  ClientWidth = 1242
+  OnShow = FormShow
+  Position = poDesktopCenter
+  LCLVersion = '1.4.4.0'
+  object GridN: TDBGrid
+    Left = 8
+    Height = 176
+    Top = 40
+    Width = 1220
+    Color = clWindow
+    Columns = <    
+      item
+        Title.Caption = 'Importação'
+        Width = 85
+        FieldName = 'not_imp'
+      end    
+      item
+        Title.Caption = 'Emissão'
+        Width = 85
+        FieldName = 'not_emi'
+      end    
+      item
+        Title.Caption = 'Chave de Acesso'
+        Width = 290
+        FieldName = 'not_cha'
+      end    
+      item
+        Title.Caption = 'Emitente'
+        Width = 320
+        FieldName = 'emi_rzo'
+      end    
+      item
+        Title.Caption = 'Destinatário'
+        Width = 320
+        FieldName = 'des_nom'
+      end    
+      item
+        Title.Caption = 'Valor'
+        Width = 80
+        FieldName = 'not_tot'
+        DisplayFormat = '0.00'
+      end>
+    DataSource = DNotas
+    ReadOnly = True
+    Scrollbars = ssAutoBoth
+    TabAdvance = aaDown
+    TabOrder = 1
+  end
+  object BtnCancelar: TButton
+    Left = 1024
+    Height = 25
+    Top = 560
+    Width = 204
+    Cancel = True
+    Caption = '&Voltar'
+    OnClick = BtnCancelarClick
+    TabOrder = 2
+  end
+  object Label1: TLabel
+    Left = 8
+    Height = 20
+    Top = 16
+    Width = 116
+    Caption = 'Selecione a Nota:'
+    ParentColor = False
+  end
+  object MemoE: TMemo
+    Left = 8
+    Height = 136
+    Top = 246
+    Width = 406
+    Font.Height = -12
+    ParentFont = False
+    ReadOnly = True
+    ScrollBars = ssAutoVertical
+    TabOrder = 4
+    TabStop = False
+  end
+  object Label2: TLabel
+    Left = 8
+    Height = 20
+    Top = 222
+    Width = 62
+    Caption = 'Emitente:'
+    ParentColor = False
+  end
+  object Label3: TLabel
+    Left = 8
+    Height = 20
+    Top = 390
+    Width = 84
+    Caption = 'Destinatário:'
+    ParentColor = False
+  end
+  object MemoD: TMemo
+    Left = 8
+    Height = 136
+    Top = 416
+    Width = 406
+    Font.Height = -12
+    ParentFont = False
+    ReadOnly = True
+    ScrollBars = ssAutoVertical
+    TabOrder = 3
+    TabStop = False
+  end
+  object GridP: TDBGrid
+    Left = 432
+    Height = 306
+    Top = 246
+    Width = 796
+    Color = clWindow
+    Columns = <    
+      item
+        Title.Caption = 'Código'
+        Width = 105
+        FieldName = 'pro_cod'
+      end    
+      item
+        Title.Caption = 'Descrição'
+        Width = 350
+        FieldName = 'pro_des'
+      end    
+      item
+        Title.Caption = 'Uni.'
+        Width = 50
+        FieldName = 'pro_uni'
+      end    
+      item
+        Title.Caption = 'Qtde.'
+        Width = 50
+        FieldName = 'pro_qtd'
+      end    
+      item
+        Title.Caption = 'R$ Unitário'
+        Width = 100
+        FieldName = 'pro_unt'
+        DisplayFormat = '0.00'
+      end    
+      item
+        Title.Caption = 'R$ Total'
+        Width = 100
+        FieldName = 'pro_tot'
+        DisplayFormat = '0.00'
+      end>
+    DataSource = D
+    ReadOnly = True
+    Scrollbars = ssAutoBoth
+    TabAdvance = aaNone
+    TabOrder = 0
+    TabStop = False
+  end
+  object Label4: TLabel
+    Left = 432
+    Height = 20
+    Top = 222
+    Width = 62
+    Caption = 'Produtos:'
+    ParentColor = False
+  end
+  object QNotas: TSQLQuery
+    FieldDefs = <>
+    Database = FMenu.Database
+    Transaction = FMenu.Transaction
+    SQL.Strings = (
+      'select n.*, e.emi_rzo, d.des_nom from notas n'
+      'left join destinatarios d on not_dest=des_doc'
+      'left join emitentes e on not_emit=emi_doc'
+    )
+    Params = <>
+    left = 140
+    top = 224
+  end
+  object D: TDataSource
+    DataSet = Q
+    left = 220
+    top = 156
+  end
+  object Q: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'not_cha'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'not_usr'
+        DataType = ftInteger
+        Precision = -1
+        Size = 0
+      end    
+      item
+        Name = 'not_emit'
+        DataType = ftLargeint
+        Precision = -1
+        Size = 0
+      end    
+      item
+        Name = 'not_dest'
+        DataType = ftLargeint
+        Precision = -1
+        Size = 0
+      end    
+      item
+        Name = 'not_emi'
+        DataType = ftDate
+        Precision = -1
+        Size = 0
+      end    
+      item
+        Name = 'not_imp'
+        DataType = ftDate
+        Precision = -1
+        Size = 0
+      end    
+      item
+        Name = 'not_pro'
+        DataType = ftString
+        Precision = -1
+        Size = 255
+      end    
+      item
+        Name = 'not_tot'
+        DataType = ftBCD
+        Precision = -1
+        Size = 2
+      end    
+      item
+        Name = 'emi_rzo'
+        DataType = ftString
+        Precision = -1
+        Size = 255
+      end    
+      item
+        Name = 'des_nom'
+        DataType = ftString
+        Precision = -1
+        Size = 255
+      end>
+    Database = FMenu.Database
+    Transaction = FMenu.Transaction
+    SQL.Strings = (
+      ''
+    )
+    Params = <>
+    left = 140
+    top = 156
+  end
+  object DNotas: TDataSource
+    DataSet = QNotas
+    OnDataChange = DNotasDataChange
+    left = 220
+    top = 224
+  end
+end

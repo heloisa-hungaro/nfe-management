@@ -1,0 +1,169 @@
+object FRemove: TFRemove
+  Left = 306
+  Height = 312
+  Top = 341
+  Width = 1237
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
+  Caption = 'Remover NF-e do Sistema'
+  ClientHeight = 312
+  ClientWidth = 1237
+  OnShow = FormShow
+  Position = poDesktopCenter
+  LCLVersion = '1.4.4.0'
+  object BtnGerar: TButton
+    Left = 7
+    Height = 25
+    Top = 280
+    Width = 200
+    Caption = '&Remover'
+    OnClick = BtnGerarClick
+    TabOrder = 0
+  end
+  object BtnCancelar: TButton
+    Left = 1028
+    Height = 25
+    Top = 280
+    Width = 200
+    Cancel = True
+    Caption = '&Voltar'
+    OnClick = BtnCancelarClick
+    TabOrder = 1
+  end
+  object Grid: TDBGrid
+    Left = 8
+    Height = 264
+    Top = 8
+    Width = 1220
+    Color = clWindow
+    Columns = <    
+      item
+        Title.Caption = 'Importação'
+        Width = 85
+        FieldName = 'not_imp'
+      end    
+      item
+        Title.Caption = 'Emissão'
+        Width = 85
+        FieldName = 'not_emi'
+      end    
+      item
+        Title.Caption = 'Chave de Acesso'
+        Width = 290
+        FieldName = 'not_cha'
+      end    
+      item
+        Title.Caption = 'Emitente'
+        Width = 320
+        FieldName = 'emi_rzo'
+      end    
+      item
+        Title.Caption = 'Destinatário'
+        Width = 320
+        FieldName = 'des_nom'
+      end    
+      item
+        Title.Caption = 'Valor'
+        Width = 80
+        FieldName = 'not_tot'
+        DisplayFormat = '0.00'
+      end>
+    DataSource = D
+    ReadOnly = True
+    Scrollbars = ssAutoBoth
+    TabAdvance = aaDown
+    TabOrder = 2
+  end
+  object Q: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'not_cha'
+        DataType = ftString
+        Precision = -1
+        Size = 60
+      end    
+      item
+        Name = 'not_usr'
+        DataType = ftInteger
+        Precision = -1
+        Size = 0
+      end    
+      item
+        Name = 'not_emit'
+        DataType = ftLargeint
+        Precision = -1
+        Size = 0
+      end    
+      item
+        Name = 'not_dest'
+        DataType = ftLargeint
+        Precision = -1
+        Size = 0
+      end    
+      item
+        Name = 'not_emi'
+        DataType = ftDate
+        Precision = -1
+        Size = 0
+      end    
+      item
+        Name = 'not_imp'
+        DataType = ftDate
+        Precision = -1
+        Size = 0
+      end    
+      item
+        Name = 'not_pro'
+        DataType = ftString
+        Precision = -1
+        Size = 255
+      end    
+      item
+        Name = 'not_tot'
+        DataType = ftBCD
+        Precision = -1
+        Size = 2
+      end    
+      item
+        Name = 'emi_rzo'
+        DataType = ftString
+        Precision = -1
+        Size = 255
+      end    
+      item
+        Name = 'des_nom'
+        DataType = ftString
+        Precision = -1
+        Size = 255
+      end>
+    Database = FMenu.Database
+    Transaction = Transaction
+    SQL.Strings = (
+      'select n.*, e.emi_rzo, d.des_nom from notas n'
+      'left join destinatarios d on n.not_dest=d.des_doc'
+      'left join emitentes e on n.not_emit=e.emi_doc'
+    )
+    Params = <>
+    left = 112
+    top = 128
+  end
+  object D: TDataSource
+    DataSet = Q
+    left = 192
+    top = 128
+  end
+  object QRemove: TSQLQuery
+    FieldDefs = <>
+    Database = FMenu.Database
+    Transaction = Transaction
+    Params = <>
+    left = 112
+    top = 192
+  end
+  object Transaction: TSQLTransaction
+    Active = False
+    Database = FMenu.Database
+    left = 192
+    top = 192
+  end
+end
